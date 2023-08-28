@@ -89,4 +89,45 @@ public class BDatos {
 		conn.commit();
 	}
 
+	// Inserto datos en la tabla cliente
+	private static void insertCliente(Connection conn, String nombre, String email) throws SQLException {
+		// TODO Auto-generated method stub
+		
+		String table = "INSERT INTO cliente (nombre, email) values (?,?)";
+		// faltan los parametros
+		conn.prepareStatement(table).execute();
+		conn.commit();
+	}
+
+	// Inserto datos en la tabla factura
+	private static void insertFactura(Connection conn, Int cliente) throws SQLException {
+		// TODO Auto-generated method stub
+		
+		String table = "INSERT INTO factura (idCliente) values (?)";
+		// faltan los parametros
+		conn.prepareStatement(table).execute();
+		conn.commit();
+	}
+
+	// Inserto datos en la tabla producto
+	private static void insertProducto(Connection conn, String nombre, Float valor) throws SQLException {
+		// TODO Auto-generated method stub
+		
+		String table = "INSERT INTO producto (nombre, valor) values (?,?)";
+		// faltan los parametros
+		conn.prepareStatement(table).execute();
+		conn.commit();
+	}
+
+	// Inserto datos en la tabla producto - factura
+	private static void insertFactura_Producto(Connection conn, int factura, int cliente, int cantidad) throws SQLException {
+		// TODO Auto-generated method stub
+		
+		String table = "INSERT INTO factura_producto (idFactura, idCliente,cantidad) values (?,?,?)";
+		// faltan los parametros
+		conn.prepareStatement(table).execute();
+		conn.commit();
+	}
+
+
 }
