@@ -29,50 +29,14 @@ public class BDatos {
 		try {
 			Connection conn = DriverManager.getConnection(url);
 			createTablaCliente(conn);
-			addPerson(conn, 1, "Juan", 20);
-			addPerson(conn, 2, "Juan Pedro", 30);
-			addPerson(conn, 3, "Marta", 40);
+			createTablaProducto(conn);
+			createTablaFactura(conn);
+			createTablaFactura_Producto(conn);
 			conn.close();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
-	
-	/* actualizo un valor de la BD */
-	private static void updatePerson(Connection conn, int id, String nombre, int edad) throws SQLException {
-		// TODO Auto-generated method stub
-		String update = "UPDATE persona set (nombre, edad) VALUES (?,?) WHERE id = ?";
-		java.sql.PreparedStatement ps = conn.prepareStatement(update);
-		ps.setString(1, nombre);
-		ps.setInt(2, edad);
-		ps.setInt(3, id);
-		ps.executeUpdate();
-		ps.close();
-		conn.commit();
-	}
-	
-	/* actualizo un valor de la BD */
-	private static void deleteupdatePerson(Connection conn, int id) throws SQLException {
-		// TODO Auto-generated method stub
-		String delete = "DELETE FROM persona WHERE id = ?";
-		java.sql.PreparedStatement ps = conn.prepareStatement(delete);
-		ps.setInt(1, id);
-		ps.executeUpdate();
-		ps.close();
-		conn.commit();
-	}
-	
-	private static void addPerson(Connection conn, int id, String nombre, int edad) throws SQLException {
-		// TODO Auto-generated method stub
-		String insert = "INSERT INTO persona (id, nombre, edad) VALUES (?,?,?)";
-		java.sql.PreparedStatement ps = conn.prepareStatement(insert);
-		ps.setInt(1, id);
-		ps.setString(2, nombre);
-		ps.setInt(3, edad);
-		ps.executeUpdate();
-		ps.close();
-		conn.commit();
 	}
 
 	// Creo tabla cliente
@@ -120,7 +84,7 @@ public class BDatos {
 		String table = "CREATE TABLE factura_producto(" +
 		"idFactura INT," +
 		"idCliente INT," +
-		"cantidad INT")";
+		"cantidad INT)";
 		conn.prepareStatement(table).execute();
 		conn.commit();
 	}
