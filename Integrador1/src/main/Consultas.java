@@ -55,7 +55,7 @@ public class Consultas {
 	}
 
 	/* imprime una lista de clientes ordenada por el cual se le facturo mas */
-	private static void productoQueMasRecaudo(Connection conn) throws SQLException {
+	private static void listadoDeClientesXMayorFacturacion(Connection conn) throws SQLException {
 		// TODO Auto-generated method stub
 		String result = "SELECT (fp.cantidad * p.valor) as total,fp.*, p.* , c.*, f.*
 		FROM `factura_producto` as fp 
