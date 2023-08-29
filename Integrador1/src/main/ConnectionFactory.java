@@ -48,7 +48,7 @@ public class ConnectionFactory {
 	}
 
 	// retorna si conecta
-	public Connection Connection() {
+	public Connection connection() {
 		return this.connection;
 	}
 

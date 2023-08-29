@@ -8,10 +8,17 @@ import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 
+import DAO.DAOFactory;
+import ConnectionFactory;
+
+
 public class Integrador {
 
 	public static void main(String[] args) throws FileNotFoundException, IOException {
 		// TODO Auto-generated method stub
+		
+		DAOFactory.getClienteDAO(ConnectionFactory.DERBY).crear_tabla();
+		DAOFactory.getProductoDAO(ConnectionFactory.DERBY).crear_tabla();
 		
 		// Para utilizar CVS y leer archivos
 

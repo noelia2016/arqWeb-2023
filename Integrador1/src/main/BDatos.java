@@ -45,7 +45,9 @@ public class BDatos {
 		"PRIMARY KEY(idFactura))";
 		conn.prepareStatement(table).execute();
 		conn.commit();
+		conn.disconnect()
 	}
+	
 	
 	// Creo tabla producto - factura
 	private static void createTableFactura_Producto(Connection conn) throws SQLException {
@@ -57,14 +59,17 @@ public class BDatos {
 		"cantidad INT)";
 		conn.prepareStatement(table).execute();
 		conn.commit();
+		conn.disconnect()
 	}
 
 	// Inserto datos en la tabla cliente
 	private static void insertCliente(Connection conn, String nombre, String email) throws SQLException {
 		// TODO Auto-generated method stub
 		
-		String table = "INSERT INTO cliente (nombre, email) values (?,?)";
-		// faltan los parametros
+		String tableC = "INSERT INTO cliente (nombre, email) values (?,?)";
+		ps = conn.prepareStatement(tableC);
+		ps.setString(1, nombre);
+		ps.setStrging(2, email);
 		conn.prepareStatement(table).execute();
 		conn.commit();
 	}
@@ -73,8 +78,9 @@ public class BDatos {
 	private static void insertFactura(Connection conn, Int cliente) throws SQLException {
 		// TODO Auto-generated method stub
 		
-		String table = "INSERT INTO factura (idCliente) values (?)";
-		// faltan los parametros
+		String tableF = "INSERT INTO factura (idCliente) values (?)";
+		ps = conn.prepareStatement(tableF);
+		ps.setInt(1, cliente);
 		conn.prepareStatement(table).execute();
 		conn.commit();
 	}
@@ -83,8 +89,10 @@ public class BDatos {
 	private static void insertProducto(Connection conn, String nombre, Float valor) throws SQLException {
 		// TODO Auto-generated method stub
 		
-		String table = "INSERT INTO producto (nombre, valor) values (?,?)";
-		// faltan los parametros
+		String tableP = "INSERT INTO producto (nombre, valor) values (?,?)";
+		ps = conn.prepareStatement(tableP);
+		ps.setString(1, nombre);
+		ps.setFloat(2, valor);
 		conn.prepareStatement(table).execute();
 		conn.commit();
 	}
@@ -94,7 +102,9 @@ public class BDatos {
 		// TODO Auto-generated method stub
 		
 		String table = "INSERT INTO factura_producto (idFactura, idCliente,cantidad) values (?,?,?)";
-		// faltan los parametros
+		ps.setInt(1, factura);
+		ps.setInt(2, cliente);
+		ps.setInt(3, cantidad);
 		conn.prepareStatement(table).execute();
 		conn.commit();
 	}
