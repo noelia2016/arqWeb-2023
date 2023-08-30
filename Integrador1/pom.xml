@@ -10,13 +10,6 @@
 	    <artifactId>derby</artifactId>
 	    <version>10.15.2.0</version>
 	</dependency>
-
-  	<!-- https://mvnrepository.com/artifact/org.apache.derby/derbytools -->
-	<dependency>
-	    <groupId>org.apache.derby</groupId>
-	    <artifactId>derbytools</artifactId>
-	    <version>10.15.2.0</version>
-	</dependency>
 	
 	<!-- https://mvnrepository.com/artifact/com.mysql/mysql-connector-j -->
 	<dependency>
