@@ -16,13 +16,13 @@ import java.io.Reader;
 public class LecturaCSV {
 
 	public static void main (String [] Args) throws IOException {
-		String directorioActual = System.getProperty("user.dir");
-        System.out.println("Directorio actual: " + directorioActual);
+		// String directorioActual = System.getProperty("user.dir");
+        // System.out.println("Directorio actual: " + directorioActual);
+
 		/**  conexion de la BD */
 		String driver="com.mysql.cj.jdbc.Driver";
 		try {
 			Class.forName(driver).getDeclaredConstructor().newInstance();
-			// CSVParser parser = CSVFormat.DEFAULT.withHeader().parse(new FileReader("productos.csv"));
 			
 		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException
 		| NoSuchMethodException | SecurityException | ClassNotFoundException e) {
@@ -39,15 +39,17 @@ public class LecturaCSV {
 			// Connection miConeccion=DriverManager.getConnection(uri,"arq_2023","Bp)U[.!9LBZo8QY3");
 			Connection miConeccion=DriverManager.getConnection(uri,"root","");
 			miConeccion.setAutoCommit(false);
+
+
 			// String[]  tablas = ['producto', 'cliente', 'factura', 'factura_producto'];
-			String[]  tablas = {"producto", "cliente", "factura", "factura_producto"};
+			String[]  tablas = {"producto", "cliente", "factura", "facturas-producto"};
 
 			// lee los 4 cvs que tenemos para cargar la BD
 			// for (String tablas : nombre) {
-			for (String nombre : tablas) {
+			for (String tabla : tablas) {
 				
 				// ruta donde esta el archivo por leer
-				Reader reader = new FileReader("Integrador1/archivos/" + nombre + "s.csv");
+				Reader reader = new FileReader("Integrador1/archivos/" + tabla + "s.csv");
 				// Reader reader = new FileReader("C:/xampp/htdocs/Proyectos/arqWeb-2023/Integrador1/archivos/" + nombre + "s.csv");
 				// Reader reader = new FileReader("src/tp1/po/"+nombre+"s.csv");
 
@@ -62,13 +64,13 @@ public class LecturaCSV {
 					Integer numeroInteger = Integer.valueOf(idString); 
 					int id = numeroInteger.intValue();
 
-					String nom="";
+					String nombre="";
 					PreparedStatement statement=null;
-					switch (nombre) {
+					switch (tabla) {
 						
 						case "producto":
 							// el nombre del producto
-							nom = csvRecord.get("nombre"); // Por nombre de columna
+							nombre = csvRecord.get("nombre"); // Por nombre de columna
 
 							// valor del producto
 							String valorString = csvRecord.get("valor"); // Por nombre de columna
@@ -84,7 +86,7 @@ public class LecturaCSV {
 							break;
 						case "cliente":
 							// el nombre del producto
-							nom = csvRecord.get("nombre"); // Por nombre de columna
+							nombre = csvRecord.get("nombre"); // Por nombre de columna
 							// valor del producto
 							String email = csvRecord.get("email"); // Por nombre de columna
 
@@ -128,15 +130,15 @@ public class LecturaCSV {
 
 					}
 				
-					statement.executeUpdate();
+					if (statement!=null) statement.executeUpdate();
 					// statement.close();
 					// hace el commit para que se guarden los datos en la tabla
 					miConeccion.commit();
 					} // fin del iterador recorriendo el archivo
-
-				// se cierra la conexion
-				miConeccion.close();
-			}
+				csvParser.close();
+				}
+			// se cierra la conexion
+			miConeccion.close();
 
 			} catch (SQLException e) {
 				e.printStackTrace();
