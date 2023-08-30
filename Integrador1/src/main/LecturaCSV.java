@@ -78,7 +78,7 @@ public class LecturaCSV {
 							// System.out.println("Id: " + id+" "+ nombre +" "+valor);
 
 							// por cada fila leida se inserta en la BD
-							statement = miConeccion.prepareStatement("INSERT INTO producto (idProducto,nombre, valor) VALUES (?, ?,?)");
+							statement = miConeccion.prepareStatement("INSERT IGNORE INTO producto (idProducto,nombre, valor) VALUES (?, ?,?)");
 							statement.setInt(1, id );
 							statement.setString(2, nombre);
 							statement.setFloat(3, valor);
@@ -91,7 +91,7 @@ public class LecturaCSV {
 							String email = csvRecord.get("email"); // Por nombre de columna
 
 							// por cada fila leida se inserta en la BD
-							statement = miConeccion.prepareStatement("INSERT INTO cliente (idCliente,nombre, email) VALUES (?, ?,?)");
+							statement = miConeccion.prepareStatement("INSERT IGNORE INTO cliente (idCliente,nombre, email) VALUES (?, ?,?)");
 							statement.setInt(1, id );
 							statement.setString(2, nombre);
 							statement.setString(3, email);
@@ -104,11 +104,11 @@ public class LecturaCSV {
 							int idCliente = idClInteger.intValue();
 
 							// por cada fila leida se inserta en la BD
-							statement = miConeccion.prepareStatement("INSERT INTO factura (idFactura, idCliente) VALUES (?, ?)");
+							statement = miConeccion.prepareStatement("INSERT IGNORE INTO factura (idFactura, idCliente) VALUES (?, ?)");
 							statement.setInt(1, id );
 							statement.setInt(2, idCliente);
 							break;
-						case "factura_producto":
+						case "facturas-producto":
 
 							// id del producto
 							String idProductoString=csvRecord.get("idProducto");
@@ -121,7 +121,7 @@ public class LecturaCSV {
 							int cantidad = cantidadInteger.intValue();
 
 							// por cada fila leida se inserta en la BD
-							statement = miConeccion.prepareStatement("INSERT INTO factura_producto (idFactura, idProducto, cantidad) VALUES (?, ?, ?)");
+							statement = miConeccion.prepareStatement("INSERT IGNORE INTO factura_producto (idFactura, idProducto, cantidad) VALUES (?, ?, ?)");
 							statement.setInt(1, id );
 							statement.setInt(2, idProducto);
 							statement.setInt(3, cantidad);
