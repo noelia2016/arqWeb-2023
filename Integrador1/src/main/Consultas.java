@@ -1,3 +1,5 @@
+/*
+
 package main;
 
 import java.lang.reflect.InvocationTargetException;
@@ -9,7 +11,7 @@ import java.sql.SQLException;
 
 public class Consultas {
 
-	/* retorna el producto que mas recaudo */
+	// retorna el producto que mas recaudo 
 	private static void productoQueMasRecaudo(Connection conn) throws SQLException {
 		// TODO Auto-generated method stub
 		String result = "SELECT MAX(fp.cantidad * p.valor) as total,fp.*, p.* FROM `factura_producto` as fp inner join producto as p on fp.idProducto = p.idProducto
@@ -20,7 +22,7 @@ public class Consultas {
 		conn.commit();
 	}
 
-	/* imprime una lista de clientes ordenada por el cual se le facturo mas */
+	// imprime una lista de clientes ordenada por el cual se le facturo mas 
 	private static void listadoDeClientesXMayorFacturacion(Connection conn) throws SQLException {
 		// TODO Auto-generated method stub
 		String result = "SELECT (fp.cantidad * p.valor) as total,fp.*, p.* , c.*, f.*
@@ -36,3 +38,4 @@ public class Consultas {
 	}
 
 }
+*/
