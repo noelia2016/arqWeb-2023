@@ -8,17 +8,23 @@ public class ConnectionFactory {
 	public static final String DERBY = "derby";
 	public static final String MYSQL = "mysql";
 
-	private static ConnectionFactory instance = new ConnectionFactory();
+	//private static ConnectionFactory instance = new ConnectionFactory();
+	private static ConnectionFactory instance = null;
 	private Connection connection;
 
-	private ConnectionFactory() {
-	}
+	/*private ConnectionFactory() {
+	}*/
 
-	public static ConnectionFactory getInstance() {
+	public static ConnectionFactory getInstance(String motor) {
+		if (this.instance == null) {
+			instance = new ConnectionFactory();
+		}
 		return instance;
+		
 	}
 
-	public Connection connect(String type) {
+	// conectar a la BD
+	private ConnectionFactory (String type) {
 		
 		if (this.connection != null) {
 			this.disconnect();

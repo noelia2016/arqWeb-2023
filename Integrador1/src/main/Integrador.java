@@ -22,7 +22,7 @@ public class Integrador {
 		
 		// Para utilizar CVS y leer archivos
 
-		CSVParser parser = CSVFormat.DEFAULT.withHeader().parse(new FileReader("archivos/productos.csv"));
+		CSVParser parser = CSVFormat.DEFAULT.withHeader().parse(new FileReader("C:\\Users\\noeli\\eclipse-workspace-ARQUITECTURA\\Integrador\\arqWeb-2023\\Integrador1\\archivos\\productos.csv"));
 		for(CSVRecord row: parser) {
 			// aca solamente lo muestra en consola deberiamos hacer el insert para cada modelo
 			System.out.println(row.get("idProducto"));

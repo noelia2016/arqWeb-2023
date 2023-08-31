@@ -15,8 +15,9 @@ import org.apache.commons.csv.CSVRecord;
 public class Pruebacsv {
 
     public static void main(String[] args) {
+    	
         String csvFilePath = "productos.csv";
-        String jdbcUrl = "jdbc:mysql://localhost:3306/mydb";
+        String jdbcUrl = "jdbc:mysql://localhost:3306/midb_arq";
         String username = "root";
         String password = "";
 
