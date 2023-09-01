@@ -50,33 +50,28 @@ public class DAOFactory {
         }
     }
 
-    public static Factura_ProductoDAO getFactura_ProductoDAO(String type) {
+    public static Factura_ProductoDAO getFactura_ProductoDAO() {
         Connection connection = ConnectionFactory.getInstance(motor).conectar();
         
-        if (type.equals("mysql")) {
+        if (motor.equals("mysql")) {
             return new Factura_ProductoDAOImpleMySQL(connection);
-        } else if (type.equals("derby")) {
+        } else if (motor.equals("derby")) {
             // return new Factura_ProductoDAOImplMySQL(connection);
             return null;
         } else {
-            throw new IllegalArgumentException("Tipo de DAO no válido: " + type);
+            throw new IllegalArgumentException("Tipo de DAO no válido: " + motor);
+        }
+    }
+ 
+    public static ProductoDAO getProductoDAO() {
+        Connection connection = ConnectionFactory.getInstance(motor).conectar();
+        
+        if (motor.equals("mysql")) {
+            return new ProductoDAOImpleMySQL(connection);
+        } else if (motor.equals("derby")) {
+            return null;
+        } else {
+            throw new IllegalArgumentException("Tipo de DAO no válido: " + motor);
         }
     }
 }
-
-            /*
-             * public static ProductoDAO getProductoDAO(String type) {
-             * 
-             * if (type.equals("mysql")) {
-             * Connection connection =
-             * ConnectionFactory.getInstance().connect(ConnectionFactory.MYSQL);
-             * return new ProductoDAOImplMySQL(connection);
-             * } else if (type.equals("derby")) {
-             * Connection connection =
-             * ConnectionFactory.getInstance().connect(ConnectionFactory.DERBY);
-             * return new ProductoDAOImplMySQL(connection);
-             * } else {
-             * throw new IllegalArgumentException("Tipo de DAO no válido: " + type);
-             * }
-             * }
-             */
