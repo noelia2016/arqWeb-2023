@@ -2,11 +2,20 @@
 package main.modelos;
 
 public class Producto {
-
+    private int id;
     private String nombre;
     private Float valor;
 
-    public Producto(String nombre, Float valor) {
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public Producto(int id,String nombre, Float valor) {
+        this.id=id;
         this.nombre = nombre;
         this.valor = valor;
     }
