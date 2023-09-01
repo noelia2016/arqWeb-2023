@@ -1,55 +1,58 @@
-/*
+package main;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class ConnectionFactory {
-    
+
 	public static final String DERBY = "derby";
 	public static final String MYSQL = "mysql";
 
-	//private static ConnectionFactory instance = new ConnectionFactory();
 	private static ConnectionFactory instance = null;
-	private Connection connection;
-
-	/*private ConnectionFactory() {
-	}*/
+	private Connection connection=null;
+	private String motor=null;
 
 	public static ConnectionFactory getInstance(String motor) {
-		if (this.instance == null) {
-			instance = new ConnectionFactory();
+	
+		if (instance == null) {
+			instance = new ConnectionFactory(motor);
 		}
 		return instance;
-		
+	}
+	public static ConnectionFactory getInstance(){
+		return instance;
 	}
 
+	private ConnectionFactory (String moto){
+		motor=moto;
+	}
 	// conectar a la BD
-	private ConnectionFactory (String type) {
-		
+	public Connection conectar() {
+
 		if (this.connection != null) {
 			this.disconnect();
 		}
-		
+
 		// si eleijo conectarme con DERBY -- base embebida
-		if (type.equals(DERBY)) {
+		if (motor.equals(DERBY)) {
 			try {
 				Class.forName("org.apache.derby.jdbc.EmbeddedDriver");
-				this.connection = DriverManager.getConnection("jdbc:derby:arq_2023;create=true");
+				this.connection = DriverManager.getConnection("jdbc:derby:midb;create=true");
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
-		
+
 		// si elijo conectarme a traves de MysSQL
-		if (type.equals(MYSQL)) {
+		if (motor.equals(MYSQL)) {
 			try {
 				Class.forName("com.mysql.cj.jdbc.Driver");
-				this.connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/arq_2023", "root", "noelia.2023");
+				this.connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/midb", "root","");
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
-		
 		return this.connection;
 	}
 
@@ -71,4 +74,3 @@ public class ConnectionFactory {
 		}
 	}
 }
-*/
