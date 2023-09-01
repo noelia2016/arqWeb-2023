@@ -74,4 +74,8 @@ public class DAOFactory {
             throw new IllegalArgumentException("Tipo de DAO no válido: " + motor);
         }
     }
+
+    public static Connection getConnection(){
+        return ConnectionFactory.getInstance(motor).conectar();
+    }
 }

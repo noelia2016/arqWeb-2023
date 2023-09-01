@@ -2,6 +2,10 @@ package main;
 
 import java.io.FileReader;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
@@ -51,7 +55,7 @@ public class Main {
 		// miDaoProducto.insertar(p1);
 		// miDaoProducto.listar();
 
-		//incorporar CSV's
+		// incorporar CSV's
 
 		// //Productos
 		// ProductoDAO miDaoProducto = miDao.getProductoDAO();
@@ -71,16 +75,18 @@ public class Main {
 		// incorporarFacturas(miDaoFactura);
 		// miDaoFactura.listar();
 
-		//Factura_Productos
-		Factura_ProductoDAO miDaoFactura_Producto = miDao.getFactura_ProductoDAO();
-		miDaoFactura_Producto.crear_tabla();
-		incorporarFactura_Productos(miDaoFactura_Producto);
-		miDaoFactura_Producto.listar();
-
+		// //Factura_Productos
+		// Factura_ProductoDAO miDaoFactura_Producto = miDao.getFactura_ProductoDAO();
+		// miDaoFactura_Producto.crear_tabla();
+		// incorporarFactura_Productos(miDaoFactura_Producto);
+		// miDaoFactura_Producto.listar();
+		
+		consulta(miDao,"SELECT * FROM Producto");// punto 4
+		
 	}
 
 	public static void incorporarProductos(ProductoDAO dao) {
-		CSVParser parser=null;
+		CSVParser parser = null;
 		try {
 			parser = CSVFormat.DEFAULT.withHeader().parse(new FileReader("Integrador1/archivos/productos.csv"));
 		} catch (IOException e) {
@@ -88,15 +94,16 @@ public class Main {
 			e.printStackTrace();
 		}
 		for (CSVRecord row : parser) {
-			int id=Integer.parseInt(row.get("idProducto"));
+			int id = Integer.parseInt(row.get("idProducto"));
 			String nombre = row.get("nombre");
-			Float valor=Float.parseFloat(row.get("valor"));
-			Producto pro=new Producto (id,nombre, valor);
+			Float valor = Float.parseFloat(row.get("valor"));
+			Producto pro = new Producto(id, nombre, valor);
 			dao.insertar(pro);
 		}
 	}
+
 	public static void incorporarClientes(ClienteDAO dao) {
-		CSVParser parser=null;
+		CSVParser parser = null;
 		try {
 			parser = CSVFormat.DEFAULT.withHeader().parse(new FileReader("Integrador1/archivos/clientes.csv"));
 		} catch (IOException e) {
@@ -104,16 +111,16 @@ public class Main {
 			e.printStackTrace();
 		}
 		for (CSVRecord row : parser) {
-			int id=Integer.parseInt(row.get("idCliente"));
+			int id = Integer.parseInt(row.get("idCliente"));
 			String nombre = row.get("nombre");
 			String email = row.get("email");
-			Cliente cli=new Cliente (id,nombre, email);
+			Cliente cli = new Cliente(id, nombre, email);
 			dao.insertar(cli);
 		}
 	}
 
 	public static void incorporarFacturas(FacturaDAO dao) {
-		CSVParser parser=null;
+		CSVParser parser = null;
 		try {
 			parser = CSVFormat.DEFAULT.withHeader().parse(new FileReader("Integrador1/archivos/facturas.csv"));
 		} catch (IOException e) {
@@ -121,27 +128,44 @@ public class Main {
 			e.printStackTrace();
 		}
 		for (CSVRecord row : parser) {
-			int idF=Integer.parseInt(row.get("idFactura"));
-			int idC=Integer.parseInt(row.get("idCliente"));
-			Factura f=new Factura (idF,idC);
+			int idF = Integer.parseInt(row.get("idFactura"));
+			int idC = Integer.parseInt(row.get("idCliente"));
+			Factura f = new Factura(idF, idC);
 			dao.insertar(f);
 		}
-	
+
 	}
+
 	public static void incorporarFactura_Productos(Factura_ProductoDAO dao) {
-		CSVParser parser=null;
+		CSVParser parser = null;
 		try {
-			parser = CSVFormat.DEFAULT.withHeader().parse(new FileReader("Integrador1/archivos/facturas-productos.csv"));
+			parser = CSVFormat.DEFAULT.withHeader()
+					.parse(new FileReader("Integrador1/archivos/facturas-productos.csv"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		for (CSVRecord row : parser) {
-			int idF=Integer.parseInt(row.get("idFactura"));
-			int idP=Integer.parseInt(row.get("idProducto"));
-			int idC=Integer.parseInt(row.get("cantidad"));
-			Factura_Producto f=new Factura_Producto (idF,idP, idC);
+			int idF = Integer.parseInt(row.get("idFactura"));
+			int idP = Integer.parseInt(row.get("idProducto"));
+			int idC = Integer.parseInt(row.get("cantidad"));
+			Factura_Producto f = new Factura_Producto(idF, idP, idC);
 			dao.insertar(f);
+		}
+	}
+
+	public static void consulta(DAOFactory dao, String consulta) {
+		Connection connection= dao.getConnection();
+		try (Statement pre = connection.createStatement()) {
+			ResultSet resultado = pre.executeQuery(consulta);
+
+			while (resultado.next()) {
+				System.out.println(resultado.getInt(1) + " " + resultado.getString(2) + " " + resultado.getString(3));
+			}
+			// this.connection.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 }
