@@ -55,10 +55,11 @@ public class Main {
 		miDaoProducto.insertar(p1);
 		miDaoProducto.listar();
 */
+
 		// incorporar CSV's
 
 		// //Productos
-	/* 	ProductoDAO miDaoProducto = miDao.getProductoDAO();
+	 	ProductoDAO miDaoProducto = miDao.getProductoDAO();
 		miDaoProducto.crear_tabla();
 		incorporarProductos(miDaoProducto);
 		miDaoProducto.listar();
@@ -79,17 +80,17 @@ public class Main {
 		Factura_ProductoDAO miDaoFactura_Producto = miDao.getFactura_ProductoDAO();
 		miDaoFactura_Producto.crear_tabla();
 		incorporarFactura_Productos(miDaoFactura_Producto);
-		miDaoFactura_Producto.listar();*/
+		miDaoFactura_Producto.listar();
 		
 		consultaPunto4(miDao);// punto 4
 		consultaPunto5(miDao);
-		
+		System.out.println("Esta trabajando en: "+System.getProperty("user.dir"));
 	}
-	
+	public static String ubicacion="Integrador1/archivos/";
 	public static void incorporarProductos(ProductoDAO dao) {
 		CSVParser parser = null;
 		try {
-			parser = CSVFormat.DEFAULT.withHeader().parse(new FileReader("/Users/Manu/Desktop/arqWeb-2023/Integrador1/archivos/productos.csv"));
+			parser = CSVFormat.DEFAULT.withHeader().parse(new FileReader(ubicacion+"productos.csv"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -106,7 +107,7 @@ public class Main {
 	public static void incorporarClientes(ClienteDAO dao) {
 		CSVParser parser = null;
 		try {
-			parser = CSVFormat.DEFAULT.withHeader().parse(new FileReader("/Users/Manu/Desktop/arqWeb-2023/Integrador1/archivos/clientes.csv"));
+			parser = CSVFormat.DEFAULT.withHeader().parse(new FileReader(ubicacion+"clientes.csv"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -123,7 +124,7 @@ public class Main {
 	public static void incorporarFacturas(FacturaDAO dao) {
 		CSVParser parser = null;
 		try {
-			parser = CSVFormat.DEFAULT.withHeader().parse(new FileReader("/Users/Manu/Desktop/arqWeb-2023/Integrador1/archivos/facturas.csv"));
+			parser = CSVFormat.DEFAULT.withHeader().parse(new FileReader(ubicacion+"facturas.csv"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -141,7 +142,7 @@ public class Main {
 		CSVParser parser = null;
 		try {
 			parser = CSVFormat.DEFAULT.withHeader()
-					.parse(new FileReader("/Users/Manu/Desktop/arqWeb-2023/Integrador1/archivos/facturas-productos.csv"));
+					.parse(new FileReader(ubicacion+"facturas-productos.csv"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -158,7 +159,7 @@ public class Main {
 	public static void consultaPunto4(DAOFactory dao) {
 		Connection connection= dao.getConnection();
 		//String consulta= "SELECT fp.idProducto ,sum(fp.cantidad) * p.valor suma  FROM Factura_Producto fp join Producto p ON fp.idProducto=p.idProducto  group by fp.idProducto order by suma desc limit 1;";
-		String consulta = "SELECT p.nombre AS producto, SUM(fp.cantidad * p.valor) AS recaudacion FROM factura_producto fp INNER JOIN producto p ON fp.idProducto = p.idProducto GROUP BY p.nombre ORDER BY recaudacion DESC LIMIT 1;";
+		String consulta = "SELECT p.nombre AS producto, SUM(fp.cantidad * p.valor) AS recaudacion FROM Factura_Producto fp INNER JOIN Producto p ON fp.idProducto = p.idProducto GROUP BY p.nombre ORDER BY recaudacion DESC LIMIT 1;";
 
 
 		try (Statement pre = connection.createStatement()) {
@@ -180,7 +181,7 @@ public class Main {
 
 	public static void consultaPunto5(DAOFactory dao) {
 		Connection connection= dao.getConnection();
-		String consulta= "SELECT c.idCliente, c.nombre AS nombreCliente, c.email, SUM(p.valor * fp.cantidad) AS totalFacturado FROM cliente c INNER JOIN factura f ON c.idCliente = f.idCliente INNER JOIN factura_producto fp ON f.idFactura = fp.idFactura INNER JOIN producto p ON fp.idProducto = p.idProducto GROUP BY c.idCliente, c.nombre, c.email ORDER BY totalFacturado DESC;";
+		String consulta= "SELECT c.idCliente, c.nombre AS nombreCliente, c.email, SUM(p.valor * fp.cantidad) AS totalFacturado FROM cliente c INNER JOIN factura f ON c.idCliente = f.idCliente INNER JOIN Factura_Producto fp ON f.idFactura = fp.idFactura INNER JOIN Producto p ON fp.idProducto = p.idProducto GROUP BY c.idCliente, c.nombre, c.email ORDER BY totalFacturado DESC;";
 		
 		
 		try (Statement pre = connection.createStatement()) {
