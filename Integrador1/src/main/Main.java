@@ -31,65 +31,65 @@ public class Main {
 
 		DAOFactory miDao = DAOFactory.getInstance(motor);
 
-		// ClienteDAO miDaoCliente = miDao.getClienteDAO();
-		// miDaoCliente.crear_tabla();
-		// Cliente pedro=new Cliente("pedro","ped@ped");
-		// miDaoCliente.insertar(pedro);
-		// miDaoCliente.listar();
+		/* ClienteDAO miDaoCliente = miDao.getClienteDAO();
+		miDaoCliente.crear_tabla();
+		Cliente pedro=new Cliente("pedro","ped@ped");
+		miDaoCliente.insertar(pedro);
+		miDaoCliente.listar();
+ */
+		/* FacturaDAO miDaoFactura= miDao.getFacturaDAO();
+		miDaoFactura.crear_tabla();
+		Factura fact1=new Factura(4,5);
+		miDaoFactura.insertar(fact1);
+		miDaoFactura.listar();
 
-		// FacturaDAO miDaoFactura= miDao.getFacturaDAO();
-		// miDaoFactura.crear_tabla();
-		// Factura fact1=new Factura(4,5);
-		// miDaoFactura.insertar(fact1);
-		// miDaoFactura.listar();
-
-		// Factura_ProductoDAO miDaoFP= miDao.getFactura_ProductoDAO();
-		// miDaoFP.crear_tabla();
-		// Factura_Producto miFP1=new Factura_Producto(1,2, 3);
-		// miDaoFP.insertar(miFP1);
-		// miDaoFP.listar();
-
-		// ProductoDAO miDaoProducto = miDao.getProductoDAO();
-		// miDaoProducto.crear_tabla();
-		// Producto p1 = new Producto("pan", (float) 35.0);
-		// miDaoProducto.insertar(p1);
-		// miDaoProducto.listar();
-
+		Factura_ProductoDAO miDaoFP= miDao.getFactura_ProductoDAO();
+		miDaoFP.crear_tabla();
+		Factura_Producto miFP1=new Factura_Producto(1,2, 3);
+		miDaoFP.insertar(miFP1);
+		 miDaoFP.listar();
+ */
+		/* ProductoDAO miDaoProducto = miDao.getProductoDAO();
+		miDaoProducto.crear_tabla();
+		Producto p1 = new Producto("pan", (float) 35.0);
+		miDaoProducto.insertar(p1);
+		miDaoProducto.listar();
+*/
 		// incorporar CSV's
 
 		// //Productos
-		// ProductoDAO miDaoProducto = miDao.getProductoDAO();
-		// miDaoProducto.crear_tabla();
-		// incorporarProductos(miDaoProducto);
-		// miDaoProducto.listar();
-
+	/* 	ProductoDAO miDaoProducto = miDao.getProductoDAO();
+		miDaoProducto.crear_tabla();
+		incorporarProductos(miDaoProducto);
+		miDaoProducto.listar();
+ 
 		// //Clientes
-		// ClienteDAO miDaoCliente = miDao.getClienteDAO();
-		// miDaoCliente.crear_tabla();
-		// incorporarClientes(miDaoCliente);
-		// miDaoCliente.listar();
+		ClienteDAO miDaoCliente = miDao.getClienteDAO();
+		miDaoCliente.crear_tabla();
+		incorporarClientes(miDaoCliente);
+		miDaoCliente.listar();
 
 		//Facturas
-		// FacturaDAO miDaoFactura = miDao.getFacturaDAO();
-		// miDaoFactura.crear_tabla();
-		// incorporarFacturas(miDaoFactura);
-		// miDaoFactura.listar();
+		FacturaDAO miDaoFactura = miDao.getFacturaDAO();
+		miDaoFactura.crear_tabla();
+		incorporarFacturas(miDaoFactura);
+		miDaoFactura.listar();
 
 		//Factura_Productos
-		// Factura_ProductoDAO miDaoFactura_Producto = miDao.getFactura_ProductoDAO();
-		// miDaoFactura_Producto.crear_tabla();
-		// incorporarFactura_Productos(miDaoFactura_Producto);
-		// miDaoFactura_Producto.listar();
+		Factura_ProductoDAO miDaoFactura_Producto = miDao.getFactura_ProductoDAO();
+		miDaoFactura_Producto.crear_tabla();
+		incorporarFactura_Productos(miDaoFactura_Producto);
+		miDaoFactura_Producto.listar();*/
 		
 		consultaPunto4(miDao);// punto 4
-		
+		consultaPunto5(miDao);
 		
 	}
 	
 	public static void incorporarProductos(ProductoDAO dao) {
 		CSVParser parser = null;
 		try {
-			parser = CSVFormat.DEFAULT.withHeader().parse(new FileReader("Integrador1/archivos/productos.csv"));
+			parser = CSVFormat.DEFAULT.withHeader().parse(new FileReader("/Users/Manu/Desktop/arqWeb-2023/Integrador1/archivos/productos.csv"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -106,7 +106,7 @@ public class Main {
 	public static void incorporarClientes(ClienteDAO dao) {
 		CSVParser parser = null;
 		try {
-			parser = CSVFormat.DEFAULT.withHeader().parse(new FileReader("Integrador1/archivos/clientes.csv"));
+			parser = CSVFormat.DEFAULT.withHeader().parse(new FileReader("/Users/Manu/Desktop/arqWeb-2023/Integrador1/archivos/clientes.csv"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -123,7 +123,7 @@ public class Main {
 	public static void incorporarFacturas(FacturaDAO dao) {
 		CSVParser parser = null;
 		try {
-			parser = CSVFormat.DEFAULT.withHeader().parse(new FileReader("Integrador1/archivos/facturas.csv"));
+			parser = CSVFormat.DEFAULT.withHeader().parse(new FileReader("/Users/Manu/Desktop/arqWeb-2023/Integrador1/archivos/facturas.csv"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -141,7 +141,7 @@ public class Main {
 		CSVParser parser = null;
 		try {
 			parser = CSVFormat.DEFAULT.withHeader()
-					.parse(new FileReader("Integrador1/archivos/facturas-productos.csv"));
+					.parse(new FileReader("/Users/Manu/Desktop/arqWeb-2023/Integrador1/archivos/facturas-productos.csv"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -157,12 +157,45 @@ public class Main {
 
 	public static void consultaPunto4(DAOFactory dao) {
 		Connection connection= dao.getConnection();
-		String consulta= "SELECT fp.idProducto ,sum(fp.cantidad) * p.valor suma  FROM Factura_Producto fp join Producto p ON fp.idProducto=p.idProducto  group by fp.idProducto order by suma desc limit 1;";
+		//String consulta= "SELECT fp.idProducto ,sum(fp.cantidad) * p.valor suma  FROM Factura_Producto fp join Producto p ON fp.idProducto=p.idProducto  group by fp.idProducto order by suma desc limit 1;";
+		String consulta = "SELECT p.nombre AS producto, SUM(fp.cantidad * p.valor) AS recaudacion FROM factura_producto fp INNER JOIN producto p ON fp.idProducto = p.idProducto GROUP BY p.nombre ORDER BY recaudacion DESC LIMIT 1;";
+
+
 		try (Statement pre = connection.createStatement()) {
 			ResultSet resultado = pre.executeQuery(consulta);
 
 			while (resultado.next()) {
-				System.out.println("Producto: "+resultado.getInt(1) + " Recaudo: $" + resultado.getInt(2));
+				String nombreProducto = resultado.getString("producto");
+            	double recaudacion = resultado.getDouble("recaudacion");
+
+				System.out.println("Producto: " + nombreProducto);
+				System.out.println("Recaudación: $" + recaudacion);
+				}
+			// this.connection.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public static void consultaPunto5(DAOFactory dao) {
+		Connection connection= dao.getConnection();
+		String consulta= "SELECT c.idCliente, c.nombre AS nombreCliente, c.email, SUM(p.valor * fp.cantidad) AS totalFacturado FROM cliente c INNER JOIN factura f ON c.idCliente = f.idCliente INNER JOIN factura_producto fp ON f.idFactura = fp.idFactura INNER JOIN producto p ON fp.idProducto = p.idProducto GROUP BY c.idCliente, c.nombre, c.email ORDER BY totalFacturado DESC;";
+		
+		
+		try (Statement pre = connection.createStatement()) {
+			ResultSet resultado = pre.executeQuery(consulta);
+
+			while (resultado.next()) {
+				int idCliente = resultado.getInt("idCliente");
+				String nombreCliente = resultado.getString("nombreCliente");
+				String email = resultado.getString("email");
+				double totalFacturado = resultado.getDouble("totalFacturado");
+
+				System.out.println("ID Cliente: " + idCliente + "Nombre Cliente: " + nombreCliente + "Total Facturado: $" + totalFacturado);
+				//System.out.println("Nombre Cliente: " + nombreCliente);
+				//System.out.println("Email: " + email);
+				//System.out.println("Total Facturado: $" + totalFacturado);
 			}
 			// this.connection.close();
 		} catch (SQLException e) {
