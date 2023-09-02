@@ -69,22 +69,23 @@ public class Main {
 		// incorporarClientes(miDaoCliente);
 		// miDaoCliente.listar();
 
-		// //Facturas
+		//Facturas
 		// FacturaDAO miDaoFactura = miDao.getFacturaDAO();
 		// miDaoFactura.crear_tabla();
 		// incorporarFacturas(miDaoFactura);
 		// miDaoFactura.listar();
 
-		// //Factura_Productos
+		//Factura_Productos
 		// Factura_ProductoDAO miDaoFactura_Producto = miDao.getFactura_ProductoDAO();
 		// miDaoFactura_Producto.crear_tabla();
 		// incorporarFactura_Productos(miDaoFactura_Producto);
 		// miDaoFactura_Producto.listar();
 		
-		consulta(miDao,"SELECT * FROM Producto");// punto 4
+		consultaPunto4(miDao);// punto 4
+		
 		
 	}
-
+	
 	public static void incorporarProductos(ProductoDAO dao) {
 		CSVParser parser = null;
 		try {
@@ -154,13 +155,14 @@ public class Main {
 		}
 	}
 
-	public static void consulta(DAOFactory dao, String consulta) {
+	public static void consultaPunto4(DAOFactory dao) {
 		Connection connection= dao.getConnection();
+		String consulta= "SELECT fp.idProducto ,sum(fp.cantidad) * p.valor suma  FROM Factura_Producto fp join Producto p ON fp.idProducto=p.idProducto  group by fp.idProducto order by suma desc limit 1;";
 		try (Statement pre = connection.createStatement()) {
 			ResultSet resultado = pre.executeQuery(consulta);
 
 			while (resultado.next()) {
-				System.out.println(resultado.getInt(1) + " " + resultado.getString(2) + " " + resultado.getString(3));
+				System.out.println("Producto: "+resultado.getInt(1) + " Recaudo: $" + resultado.getInt(2));
 			}
 			// this.connection.close();
 		} catch (SQLException e) {
