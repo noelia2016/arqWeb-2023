@@ -48,7 +48,7 @@ public class DAOFactory {
         }
     }
 
-    public static FacturaDAO getFacturaDAO() {
+    public FacturaDAO getFacturaDAO() {
         Connection connection = ConnectionFactory.getInstance(motor).conectar();
 
         if (motor.equals("mysql")) {
@@ -61,7 +61,7 @@ public class DAOFactory {
         }
     }
 
-    public static Factura_ProductoDAO getFactura_ProductoDAO() {
+    public Factura_ProductoDAO getFactura_ProductoDAO() {
         Connection connection = ConnectionFactory.getInstance(motor).conectar();
         
         if (motor.equals("mysql")) {
@@ -73,7 +73,7 @@ public class DAOFactory {
         }
     }
  
-    public static ProductoDAO getProductoDAO() {
+    public  ProductoDAO getProductoDAO() {
         Connection connection = ConnectionFactory.getInstance(motor).conectar();
         
         if (motor.equals("mysql")) {
@@ -85,7 +85,10 @@ public class DAOFactory {
         }
     }
 
-    public static Connection getConnection(){
+    public Connection getConnection(){
         return ConnectionFactory.getInstance(motor).conectar();
+    }
+    public void desconectar(){
+        ConnectionFactory.getInstance(motor).disconnect();;
     }
 }

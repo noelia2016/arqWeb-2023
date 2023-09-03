@@ -20,55 +20,30 @@ import main.modelos.Cliente;
 import main.modelos.Factura;
 import main.modelos.Factura_Producto;
 import main.modelos.Producto;
-
 public class Main {
+	
+	// public static String ubicacion="arqWeb-2023/Integrador1/archivos/";
+	public static String ubicacion="Integrador1/archivos/";
 
 	public static void main(String[] args) {
 
 		// elegimos el motor de BD a trabajar
-		//final String motor = "mysql";
+		// final String motor = "mysql";
 		final String motor = "derby";
 
 		DAOFactory miDao = DAOFactory.getInstance(motor);
 
-		/* ClienteDAO miDaoCliente = miDao.getClienteDAO();
-		miDaoCliente.crear_tabla();
-		Cliente pedro=new Cliente("pedro","ped@ped");
-		miDaoCliente.insertar(pedro);
-		miDaoCliente.listar();
- */
-		/* FacturaDAO miDaoFactura= miDao.getFacturaDAO();
-		miDaoFactura.crear_tabla();
-		Factura fact1=new Factura(4,5);
-		miDaoFactura.insertar(fact1);
-		miDaoFactura.listar();
-
-		Factura_ProductoDAO miDaoFP= miDao.getFactura_ProductoDAO();
-		miDaoFP.crear_tabla();
-		Factura_Producto miFP1=new Factura_Producto(1,2, 3);
-		miDaoFP.insertar(miFP1);
-		 miDaoFP.listar();
- */
-		/* ProductoDAO miDaoProducto = miDao.getProductoDAO();
-		miDaoProducto.crear_tabla();
-		Producto p1 = new Producto("pan", (float) 35.0);
-		miDaoProducto.insertar(p1);
-		miDaoProducto.listar();
-*/
-
-		// incorporar CSV's
-
-		// //Productos FUNCIONA
-	 	/*  ProductoDAO miDaoProducto = miDao.getProductoDAO();
+		// //Productos 
+	 	ProductoDAO miDaoProducto = miDao.getProductoDAO();
 		miDaoProducto.crear_tabla();
 		incorporarProductos(miDaoProducto);
-		miDaoProducto.listar();*/
+		miDaoProducto.listar();
  
-		// //Clientes FUNCIONA
-		/*ClienteDAO miDaoCliente = miDao.getClienteDAO();
+		// //Clientes 
+		ClienteDAO miDaoCliente = miDao.getClienteDAO();
 		miDaoCliente.crear_tabla();
 		incorporarClientes(miDaoCliente);
-		miDaoCliente.listar();*/
+		miDaoCliente.listar();
 
 		//Facturas
 		FacturaDAO miDaoFactura = miDao.getFacturaDAO();
@@ -76,17 +51,17 @@ public class Main {
 		incorporarFacturas(miDaoFactura);
 		miDaoFactura.listar();
 
-		//Factura_Productos FUNCIONA
-		/*Factura_ProductoDAO miDaoFactura_Producto = miDao.getFactura_ProductoDAO();
+		//Factura_Productos 
+		Factura_ProductoDAO miDaoFactura_Producto = miDao.getFactura_ProductoDAO();
 		miDaoFactura_Producto.crear_tabla();
 		incorporarFactura_Productos(miDaoFactura_Producto);
-		miDaoFactura_Producto.listar();*/
-		 
-		//consultaPunto4(miDao);// punto 4
-		//consultaPunto5(miDao);
-		System.out.println("Esta trabajando en: "+System.getProperty("user.dir"));
+		miDaoFactura_Producto.listar();
+
+		
+		consultaPunto4(miDao, motor);
+		consultaPunto5(miDao);
+		miDao.desconectar();
 	}
-	public static String ubicacion="/Users/Manu/Desktop/arqWeb-2023/Integrador1/archivos/";
 	public static void incorporarProductos(ProductoDAO dao) {
 		CSVParser parser = null;
 		try {
@@ -156,10 +131,11 @@ public class Main {
 		}
 	}
 
-	public static void consultaPunto4(DAOFactory dao) {
+	public static void consultaPunto4(DAOFactory dao, String motor) {
 		Connection connection= dao.getConnection();
-		//String consulta= "SELECT fp.idProducto ,sum(fp.cantidad) * p.valor suma  FROM Factura_Producto fp join Producto p ON fp.idProducto=p.idProducto  group by fp.idProducto order by suma desc limit 1;";
-		String consulta = "SELECT p.nombre AS producto, SUM(fp.cantidad * p.valor) AS recaudacion FROM Factura_Producto fp INNER JOIN Producto p ON fp.idProducto = p.idProducto GROUP BY p.nombre ORDER BY recaudacion DESC LIMIT 1;";
+		String consulta=null;
+		if (motor=="mysql") consulta = "SELECT p.nombre AS producto, SUM(fp.cantidad * p.valor) AS recaudacion FROM Factura_Producto fp INNER JOIN Producto p ON fp.idProducto = p.idProducto GROUP BY p.nombre ORDER BY recaudacion DESC LIMIT 1;";
+		else consulta = "SELECT p.nombre AS producto, SUM(fp.cantidad * p.valor) AS recaudacion FROM Factura_Producto fp INNER JOIN Producto p ON fp.idProducto = p.idProducto GROUP BY p.nombre ORDER BY recaudacion DESC FETCH FIRST 1 ROWS ONLY";
 
 
 		try (Statement pre = connection.createStatement()) {
@@ -181,7 +157,7 @@ public class Main {
 
 	public static void consultaPunto5(DAOFactory dao) {
 		Connection connection= dao.getConnection();
-		String consulta= "SELECT c.idCliente, c.nombre AS nombreCliente, c.email, SUM(p.valor * fp.cantidad) AS totalFacturado FROM cliente c INNER JOIN factura f ON c.idCliente = f.idCliente INNER JOIN Factura_Producto fp ON f.idFactura = fp.idFactura INNER JOIN Producto p ON fp.idProducto = p.idProducto GROUP BY c.idCliente, c.nombre, c.email ORDER BY totalFacturado DESC;";
+		String consulta= "SELECT c.idCliente, c.nombre AS nombreCliente, c.email, SUM(p.valor * fp.cantidad) AS totalFacturado FROM cliente c INNER JOIN factura f ON c.idCliente = f.idCliente INNER JOIN Factura_Producto fp ON f.idFactura = fp.idFactura INNER JOIN Producto p ON fp.idProducto = p.idProducto GROUP BY c.idCliente, c.nombre, c.email ORDER BY totalFacturado DESC";
 		
 		
 		try (Statement pre = connection.createStatement()) {
