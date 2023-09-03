@@ -1,8 +1,19 @@
-package main.DAO;
-
-import main.ConnectionFactory;
+package main.factory;
 
 import java.sql.Connection;
+
+import main.DAO.ClienteDAO;
+import main.DAO.ClienteDAOImpleDerby;
+import main.DAO.ClienteDAOImpleMySQL;
+import main.DAO.FacturaDAO;
+import main.DAO.FacturaDAOImpleMySQL;
+import main.DAO.FacturaDAOImpleDerby;
+import main.DAO.Factura_ProductoDAO;
+import main.DAO.Factura_ProductoDAOImpleDerby;
+import main.DAO.Factura_ProductoDAOImpleMySQL;
+import main.DAO.ProductoDAO;
+import main.DAO.ProductoDAOImpleMySQL;
+import main.DAO.ProductoDAOImpleDerby;
 
 public class DAOFactory {
 
@@ -30,8 +41,8 @@ public class DAOFactory {
         if (motor.equals("mysql")) {
             return new ClienteDAOImpleMySQL(connection);
         } else if (motor.equals("derby")) {
-            return null;
-            // return new ClienteDAOImplMySQL(connection);
+            return new ClienteDAOImpleDerby(connection);
+            
         } else {
             throw new IllegalArgumentException("Tipo de DAO no válido: " + motor);
         }
@@ -44,7 +55,7 @@ public class DAOFactory {
 
             return new FacturaDAOImpleMySQL(connection);
         } else if (motor.equals("derby")) {
-            return null;
+            return new FacturaDAOImpleDerby(connection);
         } else {
             throw new IllegalArgumentException("Tipo de DAO no válido: " + motor);
         }
@@ -56,8 +67,7 @@ public class DAOFactory {
         if (motor.equals("mysql")) {
             return new Factura_ProductoDAOImpleMySQL(connection);
         } else if (motor.equals("derby")) {
-            // return new Factura_ProductoDAOImplMySQL(connection);
-            return null;
+            return new Factura_ProductoDAOImpleDerby(connection);
         } else {
             throw new IllegalArgumentException("Tipo de DAO no válido: " + motor);
         }
@@ -69,7 +79,7 @@ public class DAOFactory {
         if (motor.equals("mysql")) {
             return new ProductoDAOImpleMySQL(connection);
         } else if (motor.equals("derby")) {
-            return null;
+            return new ProductoDAOImpleDerby(connection); 
         } else {
             throw new IllegalArgumentException("Tipo de DAO no válido: " + motor);
         }

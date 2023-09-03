@@ -66,8 +66,6 @@ public class ClienteDAOImpleMySQL implements ClienteDAO {
 			try (Statement pre = this.connection.createStatement()) {
 				ResultSet resultado=pre.executeQuery(select);
 
-				
-				
 				while (resultado.next()){
 					System.out.println(resultado.getInt(1)+" "+resultado.getString(2)+" "+resultado.getString(3));
 				}

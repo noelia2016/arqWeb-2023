@@ -12,10 +12,10 @@ import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 
 import main.DAO.ClienteDAO;
-import main.DAO.DAOFactory;
 import main.DAO.FacturaDAO;
 import main.DAO.Factura_ProductoDAO;
 import main.DAO.ProductoDAO;
+import main.factory.DAOFactory;
 import main.modelos.Cliente;
 import main.modelos.Factura;
 import main.modelos.Factura_Producto;
@@ -26,8 +26,8 @@ public class Main {
 	public static void main(String[] args) {
 
 		// elegimos el motor de BD a trabajar
-		final String motor = "mysql";
-		// final String motor = "derby";
+		//final String motor = "mysql";
+		final String motor = "derby";
 
 		DAOFactory miDao = DAOFactory.getInstance(motor);
 
@@ -58,17 +58,17 @@ public class Main {
 
 		// incorporar CSV's
 
-		// //Productos
-	 	ProductoDAO miDaoProducto = miDao.getProductoDAO();
+		// //Productos FUNCIONA
+	 	/*  ProductoDAO miDaoProducto = miDao.getProductoDAO();
 		miDaoProducto.crear_tabla();
 		incorporarProductos(miDaoProducto);
-		miDaoProducto.listar();
+		miDaoProducto.listar();*/
  
-		// //Clientes
-		ClienteDAO miDaoCliente = miDao.getClienteDAO();
+		// //Clientes FUNCIONA
+		/*ClienteDAO miDaoCliente = miDao.getClienteDAO();
 		miDaoCliente.crear_tabla();
 		incorporarClientes(miDaoCliente);
-		miDaoCliente.listar();
+		miDaoCliente.listar();*/
 
 		//Facturas
 		FacturaDAO miDaoFactura = miDao.getFacturaDAO();
@@ -76,17 +76,17 @@ public class Main {
 		incorporarFacturas(miDaoFactura);
 		miDaoFactura.listar();
 
-		//Factura_Productos
-		Factura_ProductoDAO miDaoFactura_Producto = miDao.getFactura_ProductoDAO();
+		//Factura_Productos FUNCIONA
+		/*Factura_ProductoDAO miDaoFactura_Producto = miDao.getFactura_ProductoDAO();
 		miDaoFactura_Producto.crear_tabla();
 		incorporarFactura_Productos(miDaoFactura_Producto);
-		miDaoFactura_Producto.listar();
-		
-		consultaPunto4(miDao);// punto 4
-		consultaPunto5(miDao);
+		miDaoFactura_Producto.listar();*/
+		 
+		//consultaPunto4(miDao);// punto 4
+		//consultaPunto5(miDao);
 		System.out.println("Esta trabajando en: "+System.getProperty("user.dir"));
 	}
-	public static String ubicacion="Integrador1/archivos/";
+	public static String ubicacion="/Users/Manu/Desktop/arqWeb-2023/Integrador1/archivos/";
 	public static void incorporarProductos(ProductoDAO dao) {
 		CSVParser parser = null;
 		try {
@@ -190,13 +190,10 @@ public class Main {
 			while (resultado.next()) {
 				int idCliente = resultado.getInt("idCliente");
 				String nombreCliente = resultado.getString("nombreCliente");
-				String email = resultado.getString("email");
 				double totalFacturado = resultado.getDouble("totalFacturado");
 
 				System.out.println("ID Cliente: " + idCliente + "Nombre Cliente: " + nombreCliente + "Total Facturado: $" + totalFacturado);
-				//System.out.println("Nombre Cliente: " + nombreCliente);
-				//System.out.println("Email: " + email);
-				//System.out.println("Total Facturado: $" + totalFacturado);
+				
 			}
 			// this.connection.close();
 		} catch (SQLException e) {

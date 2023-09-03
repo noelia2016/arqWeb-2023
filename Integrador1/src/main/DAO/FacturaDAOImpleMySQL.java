@@ -23,8 +23,9 @@ public class FacturaDAOImpleMySQL implements FacturaDAO {
 	public void crear_tabla() {
 		
 		try {
-			String table = "CREATE OR REPLACE TABLE factura (idFactura INT NOT NULL AUTO_INCREMENT, idCliente INT NOT NULL , PRIMARY KEY(idFactura))";
+			String table = "CREATE OR REPLACE TABLE factura (idFactura INT NOT NULL, idCliente INT NOT NULL, PRIMARY KEY(idFactura, idCliente))";
 			PreparedStatement stmt = this.connection.prepareStatement(table);
+			
 			// para crear la tabla en la BD
 			stmt.executeUpdate(table);
 			// ConnectionFactory.getInstance().disconnect();
@@ -66,8 +67,6 @@ public class FacturaDAOImpleMySQL implements FacturaDAO {
 			try (Statement pre = this.connection.createStatement()) {
 				ResultSet resultado=pre.executeQuery(select);
 
-				
-				
 				while (resultado.next()){
 					System.out.println(resultado.getInt(1)+" "+resultado.getInt(2));
 				}
