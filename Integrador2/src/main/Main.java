@@ -1,204 +1,89 @@
 package main;
 
-import java.io.FileReader;
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
-import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVParser;
-import org.apache.commons.csv.CSVRecord;
+import modelos.Estudiante;
 
-import main.DAO.ClienteDAO;
-import main.DAO.FacturaDAO;
-import main.DAO.Factura_ProductoDAO;
-import main.DAO.ProductoDAO;
-import main.factory.DAOFactory;
-import main.modelos.Cliente;
-import main.modelos.Factura;
-import main.modelos.Factura_Producto;
-import main.modelos.Producto;
 public class Main {
-	
-	// public static String ubicacion="arqWeb-2023/Integrador1/archivos/";
-	public static String ubicacion="Integrador1/archivos/";
 
 	public static void main(String[] args) {
 
-		// elegimos el motor de BD a trabajar
-		// final String motor = "mysql";
-		// final String motor = "derby";
-
-		// DAOFactory miDao = DAOFactory.getInstance(motor);
-/*
-		// //Productos 
-	 	ProductoDAO miDaoProducto = miDao.getProductoDAO();
-		miDaoProducto.crear_tabla();
-		incorporarProductos(miDaoProducto);
-		miDaoProducto.listar();
- 
-		// //Clientes 
-		ClienteDAO miDaoCliente = miDao.getClienteDAO();
-		miDaoCliente.crear_tabla();
-		incorporarClientes(miDaoCliente);
-		miDaoCliente.listar();
-
-		//Facturas
-		FacturaDAO miDaoFactura = miDao.getFacturaDAO();
-		miDaoFactura.crear_tabla();
-		incorporarFacturas(miDaoFactura);
-		miDaoFactura.listar();
-
-		//Factura_Productos 
-		Factura_ProductoDAO miDaoFactura_Producto = miDao.getFactura_ProductoDAO();
-		miDaoFactura_Producto.crear_tabla();
-		incorporarFactura_Productos(miDaoFactura_Producto);
-		miDaoFactura_Producto.listar();
-
-*/		
-		// consultaPunto4(miDao, motor);
-		// consultaPunto5(miDao);
-		// miDao.desconectar();
-
-		EntityManagerFactory emf=Persistence.createEntityManagerFactory("pirulo");
-		EntityManager em=emf.createEntityManager();
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("pirulo");
+		EntityManager em = emf.createEntityManager();
 		em.getTransaction().begin();
-		Cliente cl=new Cliente("pepe2","aamail");
-		em.persist(cl);
-		// Cliente cli=em.find(Cliente.class,1);
-		List<Cliente> cli=em.createQuery("select c from Cliente c").getResultList();
-		// System.out.println(cli);
-		cli.forEach(c -> System.out.println(c));
 
+		// Estudiante e1=new Estudiante(1,"pepe","arr",2951,11,"3arroyos1");
+		// em.persist(e1);
+		List<Estudiante> estudiantes = em.createQuery("select c from Estudiante c").getResultList();
+		estudiantes.forEach(c -> System.out.println(c));
 
-		// // Factura f1=new Factura(3, 3);
-		// // Factura f2=new Factura(2, 1);
-		// // em.persist(f1);
-		// // em.persist(f2);
+		// a) dar de alta un estudiante
+		puntoA();
+
+		// b) matricular un estudiante en una carrera
+		puntoB();
+
+		// c) recuperar todos los estudiantes, y especificar algún criterio de
+		// ordenamiento simple.
+		puntoC();
+
+		// d) recuperar un estudiante, en base a su número de libreta universitaria.
+		puntoD();
+
+		// e) recuperar todos los estudiantes, en base a su género.
+		puntoE();
+
+		// f) recuperar las carreras con estudiantes inscriptos, y ordenar por cantidad
+		// de inscriptos.
+		puntoF();
+
+		// g) recuperar los estudiantes de una determinada carrera, filtrado por ciudad
+		// de residencia.
+		puntoG();
+
+		// 3) Generar un reporte de las carreras, que para cada carrera incluya
+		// información de los
+		// inscriptos y egresados por año. Se deben ordenar las carreras
+		// alfabéticamente, y presentar
+		// los años de manera cronológica.
+		punto3();
+
 		em.getTransaction().commit();
 		em.close();
 		emf.close();
 	}
-	public static void incorporarProductos(ProductoDAO dao) {
-		CSVParser parser = null;
-		try {
-			parser = CSVFormat.DEFAULT.withHeader().parse(new FileReader(ubicacion+"productos.csv"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		for (CSVRecord row : parser) {
-			int id = Integer.parseInt(row.get("idProducto"));
-			String nombre = row.get("nombre");
-			Float valor = Float.parseFloat(row.get("valor"));
-			Producto pro = new Producto(id, nombre, valor);
-			dao.insertar(pro);
-		}
+
+	private static void puntoA() {
+		// Estudiante e1=new Estudiante(1,"pepe","arr",2951,11,"3arroyos1");
+		// em.persist(e1);
 	}
 
-	public static void incorporarClientes(ClienteDAO dao) {
-		CSVParser parser = null;
-		try {
-			parser = CSVFormat.DEFAULT.withHeader().parse(new FileReader(ubicacion+"clientes.csv"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		for (CSVRecord row : parser) {
-			int id = Integer.parseInt(row.get("idCliente"));
-			String nombre = row.get("nombre");
-			String email = row.get("email");
-			Cliente cli = new Cliente(nombre, email);
-			dao.insertar(cli);
-		}
+	private static void puntoB() {
 	}
 
-	public static void incorporarFacturas(FacturaDAO dao) {
-		CSVParser parser = null;
-		try {
-			parser = CSVFormat.DEFAULT.withHeader().parse(new FileReader(ubicacion+"facturas.csv"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		for (CSVRecord row : parser) {
-			int idF = Integer.parseInt(row.get("idFactura"));
-			int idC = Integer.parseInt(row.get("idCliente"));
-			Factura f = new Factura(idF, idC);
-			dao.insertar(f);
-		}
-
+	private static void puntoC() {
 	}
 
-	public static void incorporarFactura_Productos(Factura_ProductoDAO dao) {
-		CSVParser parser = null;
-		try {
-			parser = CSVFormat.DEFAULT.withHeader()
-					.parse(new FileReader(ubicacion+"facturas-productos.csv"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		for (CSVRecord row : parser) {
-			int idF = Integer.parseInt(row.get("idFactura"));
-			int idP = Integer.parseInt(row.get("idProducto"));
-			int idC = Integer.parseInt(row.get("cantidad"));
-			Factura_Producto f = new Factura_Producto(idF, idP, idC);
-			dao.insertar(f);
-		}
+	private static void puntoD() {
 	}
 
-	public static void consultaPunto4(DAOFactory dao, String motor) {
-		Connection connection= dao.getConnection();
-		String consulta=null;
-		if (motor=="mysql") consulta = "SELECT p.nombre AS producto, SUM(fp.cantidad * p.valor) AS recaudacion FROM Factura_Producto fp INNER JOIN Producto p ON fp.idProducto = p.idProducto GROUP BY p.nombre ORDER BY recaudacion DESC LIMIT 1;";
-		else consulta = "SELECT p.nombre AS producto, SUM(fp.cantidad * p.valor) AS recaudacion FROM Factura_Producto fp INNER JOIN Producto p ON fp.idProducto = p.idProducto GROUP BY p.nombre ORDER BY recaudacion DESC FETCH FIRST 1 ROWS ONLY";
-
-
-		try (Statement pre = connection.createStatement()) {
-			ResultSet resultado = pre.executeQuery(consulta);
-
-			while (resultado.next()) {
-				String nombreProducto = resultado.getString("producto");
-            	double recaudacion = resultado.getDouble("recaudacion");
-
-				System.out.println("Producto: " + nombreProducto);
-				System.out.println("Recaudación: $" + recaudacion);
-				}
-			// this.connection.close();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	private static void puntoE() {
 	}
 
-	public static void consultaPunto5(DAOFactory dao) {
-		Connection connection= dao.getConnection();
-		String consulta= "SELECT c.idCliente, c.nombre AS nombreCliente, c.email, SUM(p.valor * fp.cantidad) AS totalFacturado FROM cliente c INNER JOIN factura f ON c.idCliente = f.idCliente INNER JOIN Factura_Producto fp ON f.idFactura = fp.idFactura INNER JOIN Producto p ON fp.idProducto = p.idProducto GROUP BY c.idCliente, c.nombre, c.email ORDER BY totalFacturado DESC";
-		
-		
-		try (Statement pre = connection.createStatement()) {
-			ResultSet resultado = pre.executeQuery(consulta);
-
-			while (resultado.next()) {
-				int idCliente = resultado.getInt("idCliente");
-				String nombreCliente = resultado.getString("nombreCliente");
-				double totalFacturado = resultado.getDouble("totalFacturado");
-
-				System.out.println("ID Cliente: " + idCliente + "Nombre Cliente: " + nombreCliente + "Total Facturado: $" + totalFacturado);
-				
-			}
-			// this.connection.close();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	private static void puntoF() {
 	}
+
+	private static void puntoG() {
+	}
+
+	private static void puntoH() {
+	}
+
+	private static void punto3() {
+	}
+
 }
