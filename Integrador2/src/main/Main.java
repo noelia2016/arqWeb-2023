@@ -12,7 +12,7 @@ public class Main {
 
 	public static void main(String[] args) {
 
-		EntityManagerFactory emf = Persistence.createEntityManagerFactory("pirulo");
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("Integrador2");
 		EntityManager em = emf.createEntityManager();
 		em.getTransaction().begin();
 
