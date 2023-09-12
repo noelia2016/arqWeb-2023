@@ -1,8 +1,12 @@
 package main;
 
-import DAO.DAOFactory;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import modelo.*;
 import ConnectionFactory;
+// hay que importar las entity que tenemos en el archivo de persitence.xml
+import probando.integrador.Modelo.Estudiante;
 
 public class main {
 

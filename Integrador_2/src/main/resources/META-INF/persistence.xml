@@ -7,7 +7,7 @@
 		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
         <!-- los diferentes modelos a persistir -->
-		<class>Modelo.Estudiante</class>
+		<class>probando.integrador.Estudiante</class>
 
 		<properties>
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver" />
