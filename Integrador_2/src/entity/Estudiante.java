@@ -2,6 +2,8 @@ package modelo;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 
@@ -9,6 +11,7 @@ import javax.persistence.Id;
 public class Estudiante {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
 	@Column(nullable = false)
@@ -29,9 +32,8 @@ public class Estudiante {
 		super();
 	}
 
-	public Estudiante(int id, String nombre, String apellido, int nro_doc, int edad, String ciudad) {
+	public Estudiante( String nombre, String apellido, int nro_doc, int edad, String ciudad) {
 		super();
-		this.id = id;
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.nro_doc = nro_doc;

@@ -7,7 +7,7 @@
 		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
         <!-- los diferentes modelos a persistir -->
-		<class>probando.integrador.Estudiante</class>
+		<class>Entity.Estudiante</class>
 
 		<properties>
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver" />
@@ -24,7 +24,7 @@
 	<persistence-unit name="Derby">
 		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
-		<class>Modelo.Persona</class>
+		<class>Entity.Estudiante</class>
 
 		<properties>
 			<property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.EmbeddedDriver" />
