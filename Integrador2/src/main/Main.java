@@ -22,7 +22,7 @@ public class Main {
 		estudiantes.forEach(c -> System.out.println(c));
 
 		// a) dar de alta un estudiante
-		//puntoA(em);
+		// puntoA(em);
 
 		// b) matricular un estudiante en una carrera
 		puntoB();
@@ -58,9 +58,9 @@ public class Main {
 	}
 
 	private static void puntoA(EntityManager em) {
-		Estudiante e1=new Estudiante(2,"pepe","arr",2951,11,"3arroyos1");
+		Estudiante e1=new Estudiante(1,"pepe","arr",2951,11,"3arroyos1");
 		em.persist(e1);
-		Estudiante e2=new Estudiante(3,"MANU","arr",2971,11,"3arroyos1");
+		Estudiante e2=new Estudiante(2,"MANU","arr",2971,11,"3arroyos1");
 		em.persist(e2);
 	}
 

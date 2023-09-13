@@ -1,42 +1,52 @@
 package modelos;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-
+import javax.persistence.OneToMany;
 
 @Entity
 public class Estudiante {
 
 	@Id
+	@Column(name = "nro_libreta")
 	private int id;
 
-	@Column(nullable = false)
+	@Column
 	private String nombre;
 
+	@Column
 	private String apellido;
 
+	@Column(name = "dni")
 	private Integer nro_doc;
 
+	@Column
 	private Integer edad;
 
+	@Column
 	private String genero;
 
+	@Column(name = "ciudad")
 	private String ciudad_reside;
 
-	
+	@OneToMany
+	private List<Estudiante> estudiante;
+
 	public Estudiante() {
 		super();
 	}
 
-	public Estudiante(int id, String nombre, String apellido, int nro_doc, int edad, String ciudad) {
+	public Estudiante(int nro_libreta, String nombre, String apellido, int nro_doc, int edad, String ciudad) {
 		super();
-		this.id = id;
+		this.id = nro_libreta;
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.nro_doc = nro_doc;
 		this.edad = edad;
-		this.ciudad_reside = ciudad_reside;
+		this.ciudad_reside = ciudad;
 	}
 
 	public String getNombre() {
@@ -48,7 +58,7 @@ public class Estudiante {
 	}
 
 	public String getApellido() {
-		return this.apellido;
+		return apellido;
 	}
 
 	public void setApellido(String apellido) {
@@ -57,7 +67,7 @@ public class Estudiante {
 
 	public int getEdad() {
 		return edad;
-	} 
+	}
 
 	public void setEdad(int edad) {
 		this.edad = edad;
@@ -71,23 +81,18 @@ public class Estudiante {
 		this.nro_doc = nro_doc;
 	}
 
-	// public Equipo getCiudadReside() {
-		// return ciudad_reside;
-	// }
+	public String getCiudadReside() {
+		return ciudad_reside;
+	}
 
-	// public void setCiudadReside(Equipo ciudad) {
-		// this.ciudad_reside = ciudad;
-	// }
-
-	// public int getId() {
-		// return id;
-	// }
+	public void setCiudadReside(String ciudad) {
+		this.ciudad_reside = ciudad;
+	}
 
 	@Override
 	public String toString() {
-		return "Estudiante [id=" + id + ", nombre=" + nombre + ", apellido=" + apellido + ", nro_doc=" + nro_doc
+		return "Estudiante [id=" + id + ", nombre=" + nombre + "apellido=" + apellido + ", nro_doc="
+				+ nro_doc
 				+ ", ciudad residente=" + ciudad_reside + "]";
 	}
-
 }
-
