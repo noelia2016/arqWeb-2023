@@ -1,0 +1,13 @@
+----------------------------------------------------------------
+Wed Sep 13 17:52:13 ART 2023:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.16.1.1 - (1901046): instance a816c00e-018a-9050-d9e6-000004871e00 
+on database directory /home/diego/Escritorio/arqWeb-2023/exampleDBJPA with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@531d72ca 
+Loaded from file:/home/diego/.m2/repository/org/apache/derby/derby/10.16.1.1/derby-10.16.1.1.jar
+java.vendor=Eclipse Adoptium
+java.runtime.version=17.0.8.1+1
+user.dir=/home/diego/Escritorio/arqWeb-2023
+os.name=Linux
+os.arch=amd64
+os.version=5.10.0-22-amd64
+derby.system.home=null
+Database Class Loader started - derby.database.classpath=''

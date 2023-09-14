@@ -16,7 +16,7 @@ public class Main {
 		EntityManager em = emf.createEntityManager();
 		em.getTransaction().begin();
 
-		// Estudiante e1=new Estudiante(1,"pepe","arr",2951,11,"3arroyos1");
+		Estudiante e1=new Estudiante(1,"pepe","arr",2951,11,"3arroyos1");
 		// em.persist(e1);
 		List<Estudiante> estudiantes = em.createQuery("select c from Estudiante c").getResultList();
 		estudiantes.forEach(c -> System.out.println(c));
