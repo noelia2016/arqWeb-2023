@@ -1,6 +1,2 @@
-<<<<<<< HEAD
-!.persistence.xml
-=======
-archivos/
+.target/
 .vscode/*
->>>>>>> master
