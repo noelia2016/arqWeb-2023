@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
@@ -11,7 +13,11 @@ import javax.persistence.OneToMany;
 public class Estudiante {
 
 	@Id
+<<<<<<< HEAD:Integrador_2/src/Repository/src/modelos/Estudiante.java
 	@Column(name = "nro_libreta")
+=======
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+>>>>>>> master:Integrador_2/src/entity/Estudiante.java
 	private int id;
 
 	@Column
@@ -39,9 +45,14 @@ public class Estudiante {
 		super();
 	}
 
+<<<<<<< HEAD:Integrador_2/src/Repository/src/modelos/Estudiante.java
 	public Estudiante(int nro_libreta, String nombre, String apellido, int nro_doc, int edad, String ciudad) {
 		super();
 		this.id = nro_libreta;
+=======
+	public Estudiante( String nombre, String apellido, int nro_doc, int edad, String ciudad) {
+		super();
+>>>>>>> master:Integrador_2/src/entity/Estudiante.java
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.nro_doc = nro_doc;
